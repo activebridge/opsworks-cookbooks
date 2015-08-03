@@ -3,7 +3,6 @@ node[:deploy].each do |application, deploy|
   release_path = ::File.join(deploy[:deploy_to], 'current')
 
   execute "restart redis" do
-    command "pkill -f redis-server; redis-server /etc/redis.conf"
-    environment "RAILS_ENV" => 'staging'
+    command "kill -9 `cat /var/run/redis/redis.pid`; redis-server /etc/redis.conf"
   end
 end
